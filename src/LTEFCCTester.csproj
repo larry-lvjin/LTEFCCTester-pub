@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>LTEFCCTester</RootNamespace>
+    <AssemblyName>LTEFCCTester</AssemblyName>
+    <Platforms>x64</Platforms>
+    <ApplicationIcon>FCC.ico</ApplicationIcon>
+
+    <!-- Drop unneeded satellite language resources (keep English only) -->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+
+    <!-- Single-file self-extract needs native WPF libs bundled -->
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+
+    <!-- Build-time stamp (UTC, ISO-8601). Re-evaluated on every build.
+         Consumed by the silent build-validity guard (518400 min). -->
+    <BuildTimeUtc>$([System.DateTime]::UtcNow.ToString("o"))</BuildTimeUtc>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="BuildTimeUtc" Value="$(BuildTimeUtc)" />
+  </ItemGroup>
+
+  <!-- SIM Simulator AT-frame client (RRC recovery): serial + WMI port discovery -->
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="192.0.2.10" />
+    <PackageReference Include="System.Management" Version="192.0.2.10" />
+  </ItemGroup>
+
+  <!-- Exclude dead RFTestTool sources (unused loss/band-switch helpers) -->
+  <ItemGroup>
+    <Compile Remove="LossSelector.cs" />
+    <Compile Remove="LossTable.cs" />
+    <Compile Remove="LossEditorWindow.cs" />
+    <Compile Remove="BandSwitchHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FCC.ico" />
+    <Content Include="sim_simulator_tool.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+</Project>
