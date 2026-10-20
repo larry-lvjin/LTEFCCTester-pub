@@ -26,8 +26,8 @@
 
   <!-- SIM Simulator AT-frame client (RRC recovery): serial + WMI port discovery -->
   <ItemGroup>
-    <PackageReference Include="System.IO.Ports" Version="192.0.2.10" />
-    <PackageReference Include="System.Management" Version="192.0.2.10" />
+    <PackageReference Include="System.IO.Ports" Version="10.0.0" />
+    <PackageReference Include="System.Management" Version="10.0.0" />
   </ItemGroup>
 
   <!-- Exclude dead RFTestTool sources (unused loss/band-switch helpers) -->
